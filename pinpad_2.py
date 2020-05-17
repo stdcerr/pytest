@@ -2,8 +2,8 @@ import sys
 from PyQt4.QtGui import QApplication, QWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout,QLabel
 from PyQt4.QtGui import QIcon
 from PyQt4.QtCore import pyqtSlot,QSize
-from PyQt4 import QtGui
-
+from PyQt4 import QtGui, QtCore
+_encoding = QtGui.QApplication.UnicodeUTF8
 #Defines for "special" buttons
 SAV = 10
 ZERO = 11
@@ -21,7 +21,17 @@ class App(QDialog):
         self.pin = ""
         self.pincaption = "Pin: "
         self.initUI()
-    
+        self.loadCSS()
+
+    def loadCSS(self):
+        stylesheet = \
+            ".QWidget {\n" \
+            + "border: 20px solid black;\n" \
+            + "border-radius: 4px;\n" \
+            + "background-color: rgb(255, 255, 255);\n" \
+            + "}" 
+        self.setStyleSheet(stylesheet)
+
     def initUI(self):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
