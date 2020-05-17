@@ -13,11 +13,13 @@ class App(QDialog):
 
     def __init__(self):
         super().__init__()
-        self.title = 'PyQt5 layout - pythonspot.com'
+        self.title = 'Pinpad example'
         self.left = 10
         self.top = 10
         self.width = 320
         self.height = 100
+        self.pin = ""
+        self.pincaption = "Pin: "
         self.initUI()
     
     def initUI(self):
@@ -36,7 +38,7 @@ class App(QDialog):
         self.horizontalGroupBox = QGroupBox("Pinpad")
         vlayout = QVBoxLayout()
         lablay = QHBoxLayout()
-        self.pinlab = QLabel("Pin: ")
+        self.pinlab = QLabel(self.pincaption)
         lablay.addWidget(self.pinlab)
         vlayout.addLayout(lablay)
         h1layout = QHBoxLayout()
@@ -72,8 +74,8 @@ class App(QDialog):
             btn = QPushButton(str(digit), self)
             btn.clicked.connect(lambda: self.on_click(digit))
             lay.addWidget(btn)
-            btn.setSizePolicy(QtGui.QSizePolicy.Preferred,QtGui.QSizePolicy.Preferred)
-            btn.setMinimumSize(QSize(30,30))
+            btn.setSizePolicy(QtGui.QSizePolicy.Fixed,QtGui.QSizePolicy.Fixed)
+            btn.setMinimumSize(QSize(100,100))
 
     def special_btn_add(self, digit,lay):
         if digit == SAV:
@@ -88,17 +90,21 @@ class App(QDialog):
             btn = QPushButton("DEL", self)
             btn.clicked.connect(lambda: self.on_click(digit))
             lay.addWidget(btn)
-        btn.setSizePolicy(QtGui.QSizePolicy.Preferred,QtGui.QSizePolicy.Preferred)
-        btn.setMinimumSize(QSize(30,30))
+        btn.setSizePolicy(QtGui.QSizePolicy.Fixed,QtGui.QSizePolicy.Fixed)
+        btn.setMinimumSize(QSize(100,100))
     
     @pyqtSlot()
     def on_click(self,val):
         if val == DEL:
-            pin = self.pinlab.text()
-            pin.chop(1)
-            self.pinlab.setText(pin)
+            disp = self.pinlab.text()
+            if len(disp)> len(self.pincaption):
+                self.pinlab.setText(disp[:-1])
+                self.pin = self.pin[:-1]
+        elif val == SAV:
+            self.pinlab.setText(self.pin)
         else:
-            self.pinlab.setText(self.pinlab.text() + str (val))
+            self.pinlab.setText(self.pinlab.text() + '*')
+            self.pin = self.pin + str(val)
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
