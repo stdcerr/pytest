@@ -1,5 +1,5 @@
 import sys
-from PyQt4.QtGui import QApplication, QWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout
+from PyQt4.QtGui import QApplication, QWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout,QLabel
 from PyQt4.QtGui import QIcon
 from PyQt4.QtCore import pyqtSlot,QSize
 from PyQt4 import QtGui
@@ -35,6 +35,10 @@ class App(QDialog):
     def createHorizontalBtns(self):
         self.horizontalGroupBox = QGroupBox("Pinpad")
         vlayout = QVBoxLayout()
+        lablay = QHBoxLayout()
+        self.pinlab = QLabel("Pin: ")
+        lablay.addWidget(self.pinlab)
+        vlayout.addLayout(lablay)
         h1layout = QHBoxLayout()
         
         for i in range(1,4):
@@ -56,17 +60,6 @@ class App(QDialog):
         h4layout = QHBoxLayout()
         for i in range(10,13):
             self.button_add( i, h4layout)
-        #btn1 = QPushButton('Save', self)
-        #btn1.clicked.connect(lambda: self.on_click('SAV'))
-        #h4layout.addWidget(btn1)
-        #
-        #btn2 = QPushButton('0', self)
-        #btn2.clicked.connect(lambda: self.on_click(0))
-        #h4layout.addWidget(btn2)
-        #
-        #btn3 = QPushButton('DEL', self)
-        #btn3.clicked.connect(lambda: self.on_click('DEL'))
-        #h4layout.addWidget(btn3)
         
         vlayout.addLayout(h4layout)
         self.horizontalGroupBox.setLayout(vlayout)
@@ -100,7 +93,12 @@ class App(QDialog):
     
     @pyqtSlot()
     def on_click(self,val):
-        print(val)
+        if val == DEL:
+            pin = self.pinlab.text()
+            pin.chop(1)
+            self.pinlab.setText(pin)
+        else:
+            self.pinlab.setText(self.pinlab.text() + str (val))
     
 if __name__ == '__main__':
     app = QApplication(sys.argv)
