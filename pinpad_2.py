@@ -44,57 +44,57 @@ class App(QDialog):
         h1layout = QHBoxLayout()
         
         for i in range(1,4):
-            self.button_add( i, h1layout)
+            self.addButton( i, h1layout)
         
         vlayout.addLayout(h1layout)
         h2layout = QHBoxLayout()
         
         for i in range(4,7):
-            self.button_add( i, h2layout)
+            self.addButton( i, h2layout)
         
         vlayout.addLayout(h2layout)
         h3layout = QHBoxLayout()
         
         for i in range(7,10):
-            self.button_add( i, h3layout)
+            self.addButton( i, h3layout)
         
         vlayout.addLayout(h3layout)
         h4layout = QHBoxLayout()
         for i in range(10,13):
-            self.button_add( i, h4layout)
+            self.addButton( i, h4layout)
         
         vlayout.addLayout(h4layout)
         self.horizontalGroupBox.setLayout(vlayout)
 
-    def button_add(self, digit, lay):
+    def addButton(self, digit, lay):
         if digit > 9:
             #Add exceptions for Save, DEL & 0 buttons
-            self.special_btn_add(digit,lay)
+            self.addSpecialButton(digit,lay)
         else:
             btn = QPushButton(str(digit), self)
-            btn.clicked.connect(lambda: self.on_click(digit))
+            btn.clicked.connect(lambda: self.onClick(digit))
             lay.addWidget(btn)
             btn.setSizePolicy(QtGui.QSizePolicy.Fixed,QtGui.QSizePolicy.Fixed)
             btn.setMinimumSize(QSize(100,100))
 
-    def special_btn_add(self, digit,lay):
+    def addSpecialButton(self, digit,lay):
         if digit == SAV:
             btn = QPushButton("Save", self)
-            btn.clicked.connect(lambda: self.on_click(digit))
+            btn.clicked.connect(lambda: self.onClick(digit))
             lay.addWidget(btn)
         elif digit == ZERO:
             btn = QPushButton('0', self)
-            btn.clicked.connect(lambda: self.on_click(0))
+            btn.clicked.connect(lambda: self.onClick(0))
             lay.addWidget(btn)
         elif digit == DEL:
             btn = QPushButton("DEL", self)
-            btn.clicked.connect(lambda: self.on_click(digit))
+            btn.clicked.connect(lambda: self.onClick(digit))
             lay.addWidget(btn)
         btn.setSizePolicy(QtGui.QSizePolicy.Fixed,QtGui.QSizePolicy.Fixed)
         btn.setMinimumSize(QSize(100,100))
     
     @pyqtSlot()
-    def on_click(self,val):
+    def onClick(self,val):
         if val == DEL:
             disp = self.pinlab.text()
             if len(disp)> len(self.pincaption):
