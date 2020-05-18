@@ -1,5 +1,5 @@
 import sys
-from PyQt4.QtGui import QApplication, QWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout,QLabel
+from PyQt4.QtGui import QApplication, QWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout,QLabel,QSpacerItem
 from PyQt4.QtGui import QIcon
 from PyQt4.QtCore import pyqtSlot,QSize
 from PyQt4 import QtGui, QtCore
@@ -16,8 +16,8 @@ class App(QDialog):
         self.title = 'Pinpad example'
         self.left = 10
         self.top = 10
-        self.width = 320
-        self.height = 100
+        self.width = 1280
+        self.height = 720
         self.pin = ""
         self.pincaption = "Pin: "
         self.initUI()
@@ -25,12 +25,20 @@ class App(QDialog):
 
     def loadCSS(self):
         stylesheet = \
-            ".QWidget {\n" \
-            + "border: 20px solid black;\n" \
+            ".QPushButton {\n" \
+            + "border: 1px solid black;\n" \
             + "border-radius: 4px;\n" \
-            + "background-color: rgb(255, 255, 255);\n" \
+            + "color: #000;\n"\
+            + "background-color: #fff;\n" \
             + "}" 
         self.setStyleSheet(stylesheet)
+
+    def redBtnCSS(self, btn):
+        stylesheet = \
+            ".QPushButton {\n" \
+            + "background-color: #f00;\n" \
+            + "}" 
+        btn.setStyleSheet(stylesheet)
 
     def initUI(self):
         self.setWindowTitle(self.title)
@@ -46,10 +54,12 @@ class App(QDialog):
     
     def createHorizontalBtns(self):
         self.horizontalGroupBox = QGroupBox("Pinpad")
+        hspacer = QSpacerItem(20, 48, QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Expanding)
         vlayout = QVBoxLayout()
         lablay = QHBoxLayout()
         self.pinlab = QLabel(self.pincaption)
         lablay.addWidget(self.pinlab)
+        vlayout.addItem(hspacer)
         vlayout.addLayout(lablay)
         h1layout = QHBoxLayout()
         
@@ -85,7 +95,7 @@ class App(QDialog):
             btn.clicked.connect(lambda: self.onClick(digit))
             lay.addWidget(btn)
             btn.setSizePolicy(QtGui.QSizePolicy.Fixed,QtGui.QSizePolicy.Fixed)
-            btn.setMinimumSize(QSize(100,100))
+            btn.setMinimumSize(QSize(100,80))
 
     def addSpecialButton(self, digit,lay):
         if digit == SAV:
@@ -100,6 +110,7 @@ class App(QDialog):
             btn = QPushButton("DEL", self)
             btn.clicked.connect(lambda: self.onClick(digit))
             lay.addWidget(btn)
+            self.redBtnCSS(btn)
         btn.setSizePolicy(QtGui.QSizePolicy.Fixed,QtGui.QSizePolicy.Fixed)
         btn.setMinimumSize(QSize(100,100))
     
