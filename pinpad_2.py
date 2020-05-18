@@ -27,7 +27,7 @@ class App(QDialog):
         stylesheet = \
             ".QPushButton {\n" \
             + "border: 1px solid black;\n" \
-            + "border-radius: 4px;\n" \
+            + "border-radius: 0px;\n" \
             + "color: #000;\n"\
             + "background-color: #fff;\n" \
             + "}" 
@@ -44,17 +44,15 @@ class App(QDialog):
         self.setWindowTitle(self.title)
         self.setGeometry(self.left, self.top, self.width, self.height)
         
-        self.createHorizontalBtns()
         
         windowLayout = QVBoxLayout()
-        windowLayout.addWidget(self.horizontalGroupBox)
+        self.createHorizontalBtns(windowLayout)
         self.setLayout(windowLayout)
         
         self.show()
     
-    def createHorizontalBtns(self):
-        self.horizontalGroupBox = QGroupBox("Pinpad")
-        hspacer = QSpacerItem(20, 48, QtGui.QSizePolicy.Maximum, QtGui.QSizePolicy.Expanding)
+    def createHorizontalBtns(self,winlay):
+        hspacer = QSpacerItem(20, 40, QtGui.QSizePolicy.Minimum, QtGui.QSizePolicy.Expanding)
         vlayout = QVBoxLayout()
         lablay = QHBoxLayout()
         self.pinlab = QLabel(self.pincaption)
@@ -84,7 +82,7 @@ class App(QDialog):
             self.addButton( i, h4layout)
         
         vlayout.addLayout(h4layout)
-        self.horizontalGroupBox.setLayout(vlayout)
+        winlay.addLayout(vlayout)
 
     def addButton(self, digit, lay):
         if digit > 9:
