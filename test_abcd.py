@@ -10,6 +10,8 @@ def test_abcd(mocker):
     foo1.assert_called
 
 def mocked_foo(val):
-    print("all good {}".format(val))
+    fp = open("foo.dat",'w')
+    fp.write("bar")
+    fp.close()
 
 
