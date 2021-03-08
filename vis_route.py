@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import socket
+import json
 import urllib.request
 
 def loc_get(IP):
@@ -8,7 +9,7 @@ def loc_get(IP):
     """
     url = "https://geolocation-db.com/json/"+IP
     res = urllib.request.urlopen(url)
-    enc = res.info().get+content_charset('utf8')
+    enc = res.info().get_content_charset('utf8')
     dat = json.loads(res.read().decode(enc))
     try:
         lat = float(dat['latitude'])
@@ -21,6 +22,6 @@ def loc_get(IP):
 
 
 
-host = 'google.com'
+host = 'www.ubc.ca'
 ip = socket.gethostbyname(host)
 print(loc_get(ip))
