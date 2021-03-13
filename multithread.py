@@ -54,7 +54,6 @@ class MainWindow(QMainWindow):
     def execute_this_fn(self):
         for x in range (500000):
             print("Hello {}".format(x))
-            #time.sleep(2)
 
     def oh_no(self):
         worker = Worker(self.execute_this_fn)
