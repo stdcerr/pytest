@@ -51,13 +51,13 @@ class MainWindow(QMainWindow):
         self.timer.timeout.connect(self.recurring_timer)
         self.timer.start()
 
-    def execute_this_fn(self):
+    def execute_this_fn(self, data):
         for x in range (500000):
-            print("Hello {}".format(x))
+            print("Hello {} {}".format(x,data))
 
     def oh_no(self):
-        worker = Worker(self.execute_this_fn)
-
+        worker = Worker(self.execute_this_fn, "TEST")
+        #self.execute_this_fn()
         self.threadpool.start(worker)
 
     def recurring_timer(self):
